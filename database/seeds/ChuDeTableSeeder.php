@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-class DatabaseSeeder extends Seeder
+class ChuDeTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,21 +12,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker\Factory::create('vi_VN');
-        $now = new Carbon('2018-11-01','Aisa/Ho_Chi_Minh');
+        $faker = Faker\Factory::create('vi-VN');
+        $now = new Carbon('2018-11-01','Asia/Ho_Chi_Minh');
         $list = [];
-        for($i = 1;$i <= 100;$i++)
+        for($i = 1;$i <= 100; $i++)
         {
         	$created = $now->copy()->addSeconds($faker->numberBetween(1,259200));
         	$updated = $created->copy()->addSeconds($faker->numberBetween(300,172800));
         	array_push($list,
-        		'l_taoMoi'		=> $created,
-        		'l_capNhat'		=> $updated,
-        		'l_ten'			=> $faker->text(50);
-        		'l_trangThai'	=> 2
-        	]);
+        		[
+        			'cd_taoMoi' 	=> $created,
+        			'cd_capNhat' 	=> $updated,
+        			'cd_ten'		=> $faker->text(50),
+        			'cd_trangThai'	=> 2
+        		]);
         	$now = $updated->copy();
         }
-        DB::table('loai')->insert($list);
+        DB::table('chude')->insert($list);
     }
 }
